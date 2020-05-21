@@ -6,10 +6,10 @@ import random
 ACOUNT   = "yujia0827"
 PASSWORD = "doctorso3_A"
 ENTRY_WEBSIDE = "https://my.ntu.edu.tw/attend/ssi.aspx"
-CHECKIN_HOUR = "8"   # Which hour to checkin,  8:05  ~8:40
-CHECKOUT_HOUR = "18" # Which hour to checkout, 18:05 ~18:40
+CHECKIN_HOUR = 8   # Which hour to checkin,  8:05  ~8:40
+CHECKOUT_HOUR = 18 # Which hour to checkout, 18:05 ~18:40
 CHECKIO_MINUTE = (5,40) # Which minute area to do io
-SLEEP_INTERVAL = 10 # sec 
+SLEEP_INTERVAL = 20 # sec 
 IS_GUI = False
 
 # --- global variable ----# 
@@ -116,6 +116,7 @@ def cal_check_IO_time ():
     today_check_out_time[1] = CHECKOUT_HOUR
     today_check_out_time[2] = random.randint(CHECKIO_MINUTE[0],CHECKIO_MINUTE[1])
     today_check_out_time[3] = random.randint(0,60)
+    
     logger.info("Plan to check out at : " + str(today_check_out_time))
 
 def main ():
@@ -126,16 +127,18 @@ def main ():
     while True:
         #----- Get current time ------# 
         T = datetime.datetime.now().__str__().split() #['2020-05-20', '10:14:32.086912']
-        
         #----- Check if we need to plan -------# 
         # Monday is 0 and Sunday is 6.
         if datetime.datetime.today().weekday() != 5 and \
            datetime.datetime.today().weekday() != 6 and \
            today_check_in_time[0] != T[0] :  # Today haven't plan yet, And it's not SAT or SUN
                 cal_check_IO_time()
-
+        
         #----- Check we need to execute our plan right now--------# 
         (hour,minute,sec) = T[1].split(':') # Current time
+        hour   = int(hour)
+        minute = int(minute)
+        logger.info("Date : " + T[0] + ", Hour: " + str(hour) + ", Minute : " + str(minute) + ", sec : " + sec)
         if last_checkin_date != today_check_in_time[0] and hour == today_check_in_time[1] and minute == today_check_in_time[2]:
         # if last_checkin_date != today_check_in_time[0]:
             try: 
