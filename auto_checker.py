@@ -6,10 +6,10 @@ import random
 ACOUNT   = "yujia0827"
 PASSWORD = "doctorso3_A"
 ENTRY_WEBSIDE = "https://my.ntu.edu.tw/attend/ssi.aspx"
-CHECKIN_HOUR = "11" # Which hour to checkin
+CHECKIN_HOUR = "8" # Which hour to checkin
 CHECKOUT_HOUR = "18" # Which hour to checkout 
-CHECKIO_MINUTE = (15,45) # Which minute area to do io
-SLEEP_INTERVAL = 30 # sec 
+CHECKIO_MINUTE = (5,45) # Which minute area to do io
+SLEEP_INTERVAL = 10 # sec 
 
 # --- global variable ----# 
 today_check_in_time =["date","hour", "minute" , "sec"]
@@ -20,7 +20,7 @@ class Spider():
         #---- Get uri content -------# 
         self.options = webdriver.ChromeOptions()
         self.options.add_argument('--disable-extensions')
-        # options.add_argument('--headless') # Run chrome without GUI
+        self.options.add_argument('--headless') # Run chrome without GUI
         self.options.add_argument('--disable-gpu')
         self.options.add_argument('--no-sandbox') # Run chrome with root
         # options.add_argument("--disable-dev-shm-usage") # For err msg 
@@ -32,7 +32,7 @@ class Spider():
         browser.get(ENTRY_WEBSIDE)
     
         browser.find_element_by_link_text('登入').click()
-        
+         
         #---- Myntu login ------# 
         user_acount = browser.find_element_by_name('user')
         user_acount.click()
@@ -56,13 +56,14 @@ class Spider():
         #--- close browser ---# 
         time.sleep(3)
         browser.close()
+        print ("[INFO] Closing browser")
     
     def auto_check_out(self):
         browser = webdriver.Chrome(chrome_options=self.options)
         browser.get(ENTRY_WEBSIDE)
     
         browser.find_element_by_link_text('登入').click()
-        
+        '''
         #---- Myntu login ------# 
         user_acount = browser.find_element_by_name('user')
         user_acount.click()
@@ -86,7 +87,7 @@ class Spider():
         #--- close browser ---# 
         time.sleep(3)
         browser.close()
-
+        '''
 
 
 def cal_check_IO_time ():
@@ -109,8 +110,8 @@ def cal_check_IO_time ():
 
 def main ():
     # global today_check_in_time, today_check_out_time
-    last_checkin_date  = "2020-05-19"
-    last_checkout_date = "2020-05-19"
+    last_checkin_date  = "2020-05-20"
+    last_checkout_date = "2020-05-20"
     spider = Spider()
     while True:
         T = datetime.datetime.now().__str__().split() #['2020-05-20', '10:14:32.086912']
@@ -118,7 +119,6 @@ def main ():
         # ----- Do we plan today checkI/O time already ? ------#  
         if today_check_in_time[0] == T[0]: # Yes, plan before
             print ("Today plan before")
-            pass 
         else: # No, plan one now
             cal_check_IO_time()
 
