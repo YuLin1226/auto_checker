@@ -30,4 +30,10 @@ Version 84.0.4147.89 (Official Build) (64-bit)
 ```
 python3 auto_checker.py
 ```
+## auto start
+Put this line in /etc/rc.local
+
+```
+sudo -i -u ken python3 /home/ken/auto_checker/auto_checker.py >> rc.out &
+```
 
