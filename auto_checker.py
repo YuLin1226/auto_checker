@@ -11,6 +11,10 @@ CHECKOUT_HOUR = 18 # Which hour to checkout, 18:05 ~18:40
 CHECKIO_MINUTE = (5,40) # Which minute area to do io
 SLEEP_INTERVAL = 20 # sec 
 IS_GUI = False
+PATH_TO_DRIVER = "/home/ken/auto_checker/chromedriver"
+# These two parameter is for testing, auto_checker will ignore time and checkI/O immediately 
+IMMEDIATE_CHECK_IN = False
+IMMEDIATE_CHECK_OUT = False 
 
 # --- global variable ----# 
 today_check_in_time =["date","hour", "minute" , "sec"]
@@ -56,7 +60,7 @@ class Spider():
         action = "check_out"
         '''
         logger.info("Start auto checking routine.")
-        browser = webdriver.Chrome(chrome_options=self.options)
+        browser = webdriver.Chrome(PATH_TO_DRIVER, chrome_options=self.options)
         browser.get(ENTRY_WEBSIDE)
         logger.info("Enter entry website.")
 
@@ -125,8 +129,23 @@ def main ():
     last_checkout_date = "" # '2020-05-20'
     spider = Spider()
     while True:
+        if IMMEDIATE_CHECK_IN: # Testing block
+            try: 
+                spider.auto_check("check_in")
+            except Exception as e:
+                logger.error(e.__str__())
+            last_checkin_date = today_check_in_time[0]
+            break
+        if IMMEDIATE_CHECK_OUT: # Testing block
+            try: 
+                spider.auto_check("check_out")
+            except Exception as e:
+                logger.error(e.__str__())
+            last_checkin_date = today_check_in_time[0]
+            break
         #----- Get current time ------# 
         T = datetime.datetime.now().__str__().split() #['2020-05-20', '10:14:32.086912']
+        
         #----- Check if we need to plan -------# 
         # Monday is 0 and Sunday is 6.
         if datetime.datetime.today().weekday() != 5 and \
@@ -140,22 +159,23 @@ def main ():
         minute = int(minute)
         logger.info("Date : " + T[0] + ", Hour: " + str(hour) + ", Minute : " + str(minute) + ", sec : " + sec)
         if last_checkin_date != today_check_in_time[0] and hour == today_check_in_time[1] and minute == today_check_in_time[2]:
-        # if last_checkin_date != today_check_in_time[0]:
             try: 
                 spider.auto_check("check_in")
             except Exception as e:
                 logger.error(e.__str__())
             last_checkin_date = today_check_in_time[0]
         elif last_checkout_date != today_check_out_time[0] and hour == today_check_out_time[1] and minute == today_check_out_time[2]:
-        # elif last_checkout_date != today_check_out_time[0]:
             try: 
                 spider.auto_check("check_out")
             except Exception as e:
                 logger.error(e.__str__())
             last_checkout_date = today_check_out_time[0]
+        
         time.sleep(SLEEP_INTERVAL)
 
 if __name__ == '__main__':
+    print ("Start autochecker")
     main()
+    print ("End autochecker")
 
 
