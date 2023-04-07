@@ -19,13 +19,14 @@ $ sudo dpkg -i google-chrome-stable_current_amd64.deb
 
 
 ### Install google driver 
-Error: https://sites.google.com/a/chromium.org/chromedriver/home
 
-Or if your google browser is same as below, you don't have to install a new one.
-because repo already include this version.
-```
-Version 84.0.4147.89 (Official Build) (64-bit)
-```
+Error: [Post](https://blog.csdn.net/m0_62298204/article/details/120802053)
+
+ChromeDriver has to be updated.
+
+The chromedriver in this repo may not match yours, so you have to change the file on your own.
+
+
 ## Usage 
 ```
 python3 auto_checker.py
