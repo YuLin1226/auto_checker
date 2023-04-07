@@ -83,17 +83,17 @@ class Spider():
         login.click()
         logger.info("Click submit button")
 
-        # if action == "check_in":
-        #     # ----- click check in button -----# 
-        #     check_in = browser.find_element_by_id('btSign')
-        #     check_in.click()
-        #     logger.warning("CLICK CHECK IN.")
-        # elif action == "check_out":
-        #     # ----- click check out button -----# 
-        #     check_out = browser.find_element_by_id('btSign2')
-        #     check_out.click()
-        #     logger.warning("CLICK CHECK OUT.")
-        # #--- close browser ---# 
+        if action == "check_in":
+            # ----- click check in button -----# 
+            check_in = browser.find_element_by_id('btSign')
+            check_in.click()
+            logger.warning("CLICK CHECK IN.")
+        elif action == "check_out":
+            # ----- click check out button -----# 
+            check_out = browser.find_element_by_id('btSign2')
+            check_out.click()
+            logger.warning("CLICK CHECK OUT.")
+        #--- close browser ---# 
         time.sleep(5)
         browser.close()
         logger.info("Close browser")
@@ -111,6 +111,9 @@ def check():
     minute = int(minute)
     logger.info("Date : " + T[0] + ", Hour: " + str(hour) + ", Minute : " + str(minute) + ", sec : " + sec)
     try: 
+        if hour > 9 or hour < 7:
+            print("Wrong time to check in.")
+            return
         spider.auto_check("check_in")
     except Exception as e:
         logger.error(e.__str__())
