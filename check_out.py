@@ -10,8 +10,8 @@ ACOUNT   = "yulinchen"
 PASSWORD = "Chinese10126"
 ENTRY_WEBSIDE = "https://my.ntu.edu.tw/attend/ssi.aspx"
 CHECKIN_HOUR = 8   # Which hour to checkin,  8:05  ~8:40
-CHECKOUT_HOUR = 18 # Which hour to checkout, 18:05 ~18:40
-CHECKIO_MINUTE = (5,40) # Which minute area to do io
+CHECKOUT_HOUR = 17 # Which hour to checkout, 18:05 ~18:40
+CHECK_MINUTE = (16,30) # Which minute area to do io
 SLEEP_INTERVAL = 20 # sec 
 IS_GUI = True
 PATH_TO_DRIVER = "/home/ryannn/auto_checker/chromedriver"
@@ -111,9 +111,13 @@ def check():
     minute = int(minute)
     logger.info("Date : " + T[0] + ", Hour: " + str(hour) + ", Minute : " + str(minute) + ", sec : " + sec)
     try: 
-        if hour > 18 or hour < 16:
+        if hour > CHECKOUT_HOUR+1 or hour < CHECKOUT_HOUR-1:
             print("Wrong time to check out.")
             return
+        checktime_at_minute = random.randint(CHECK_MINUTE[0],CHECK_MINUTE[1])
+        if minute < checktime_at_minute:
+            sleep_time_second = (checktime_at_minute - minute)*60
+            time.sleep(sleep_time_second)
         spider.auto_check("check_out")
     except Exception as e:
         logger.error(e.__str__())
