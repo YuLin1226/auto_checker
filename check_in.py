@@ -13,7 +13,7 @@ CHECKIN_HOUR = 8   # Which hour to checkin,  8:05  ~8:40
 CHECKOUT_HOUR = 18 # Which hour to checkout, 18:05 ~18:40
 CHECK_MINUTE = (1,15) # Which minute area to do io
 SLEEP_INTERVAL = 20 # sec 
-IS_GUI = True
+IS_GUI = False
 PATH_TO_DRIVER = "/home/ryannn/auto_checker/chromedriver"
 
 ##################
