@@ -9,10 +9,8 @@ import random
 ACOUNT   = "yulinchen"
 PASSWORD = "Chinese10126"
 ENTRY_WEBSIDE = "https://my.ntu.edu.tw/attend/ssi.aspx"
-CHECKIN_HOUR = 8   # Which hour to checkin,  8:05  ~8:40
-CHECKOUT_HOUR = 18 # Which hour to checkout, 18:05 ~18:40
-CHECK_MINUTE = (1,15) # Which minute area to do io
-SLEEP_INTERVAL = 20 # sec 
+CHECK_HOUR = 7   # Which hour to checkin,  8:05  ~8:40
+CHECK_MINUTE = (45,59) # Which minute area to do io
 IS_GUI = False
 PATH_TO_DRIVER = "/home/ryannn/auto_checker/chromedriver"
 
@@ -111,7 +109,7 @@ def check():
     minute = int(minute)
     logger.info("Date : " + T[0] + ", Hour: " + str(hour) + ", Minute : " + str(minute) + ", sec : " + sec)
     try: 
-        if hour > CHECKIN_HOUR+1 or hour < CHECKIN_HOUR-1:
+        if hour > CHECK_HOUR+1 or hour < CHECK_HOUR-1:
             print("Wrong time to check in.")
             return
         checktime_at_minute = random.randint(CHECK_MINUTE[0],CHECK_MINUTE[1])
