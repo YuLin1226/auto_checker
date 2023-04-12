@@ -11,6 +11,7 @@ PASSWORD = "Chinese10126"
 ENTRY_WEBSIDE = "https://my.ntu.edu.tw/attend/ssi.aspx"
 CHECK_HOUR = 17 # Which hour to checkout, 18:05 ~18:40
 CHECK_MINUTE = (5,20) # Which minute area to do io
+CHECK_SECOND = (1,50)
 IS_GUI = False
 PATH_TO_DRIVER = "/home/ryannn/auto_checker/chromedriver"
 
@@ -114,7 +115,8 @@ def check():
             return
         checktime_at_minute = random.randint(CHECK_MINUTE[0],CHECK_MINUTE[1])
         if minute < checktime_at_minute:
-            sleep_time_second = (checktime_at_minute - minute)*60
+            add_second = random.randint(CHECK_SECOND[0],CHECK_SECOND[1])
+            sleep_time_second = (checktime_at_minute - minute)*60 + add_second
             time.sleep(sleep_time_second)
         spider.auto_check("check_out")
     except Exception as e:
