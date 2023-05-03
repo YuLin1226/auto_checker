@@ -103,6 +103,10 @@ def check():
         print ("Weekends, Skip check in.")
         return
     
+    if datetime.datetime.today().month == 5 and datetime.datetime.today().day == 1:
+        print ("5/1 Skip")
+        return
+
     # Get current time
     T = datetime.datetime.now().__str__().split() #['2020-05-20', '10:14:32.086912']
     hour, minute, sec = T[1].split(':')
